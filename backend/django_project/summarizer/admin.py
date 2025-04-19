@@ -4,3 +4,5 @@ from .models import Summarize
 # Register your models here.
 
 admin.site.register(Summarize)
+
+
