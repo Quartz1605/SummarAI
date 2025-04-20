@@ -1,30 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 
 const AuthForm = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    age: '',
-    phone_number: '',
+    username: "",
+    email: "",
+    password: "",
+    age: "",
+    phone_number: "",
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = isRegister
-      ? 'http://127.0.0.1:8000/auth/register/'
-      : 'http://127.0.0.1:8000/auth/login/'; 
+      ? "http://127.0.0.1:8000/auth/register/"
+      : "http://127.0.0.1:8000/auth/login/";
 
-      const bodyData = isRegister
+    const bodyData = isRegister
       ? formData
       : {
           username: formData.username,
@@ -32,44 +31,38 @@ const AuthForm = () => {
         };
 
     try {
-      console.log(bodyData)
-      const response = await fetch(url,{
-        "method" : 'POST',
-        "headers" : {
-          "Content-type" : "application/json"
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
         },
-        "body" : JSON.stringify(bodyData)
+        body: JSON.stringify(bodyData),
+      });
 
-      })
-
-      const data = await response.json()
-      if(response.ok){
+      const data = await response.json();
+      if (response.ok) {
         if (!isRegister) {
-          
-          localStorage.setItem('access_token', data.access);
-          navigate("home/")
+          localStorage.setItem("access_token", data.access);
+          navigate("home/");
         }
-        alert(isRegister ? 'Registered Successfully!' : 'Logged in Successfully!');
-        console.log(data);
+        alert(
+          isRegister ? "Registered Successfully!" : "Logged in Successfully!"
+        );
       } else {
-        alert('Error: ' + JSON.stringify(data));
+        alert("Error: " + JSON.stringify(data));
       }
-      
-     
-      
     } catch (error) {
-      console.log(error)
-      
+      console.log(error);
     }
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
         <div className="flex justify-between mb-6">
           <button
             className={`w-1/2 py-2 rounded-l-xl text-white font-semibold ${
-              isRegister ? 'bg-gray-400' : 'bg-blue-600'
+              isRegister ? "bg-gray-400" : "bg-blue-600"
             }`}
             onClick={() => setIsRegister(false)}
           >
@@ -77,7 +70,7 @@ const AuthForm = () => {
           </button>
           <button
             className={`w-1/2 py-2 rounded-r-xl text-white font-semibold ${
-              isRegister ? 'bg-blue-600' : 'bg-gray-400'
+              isRegister ? "bg-blue-600" : "bg-gray-400"
             }`}
             onClick={() => setIsRegister(true)}
           >
@@ -92,7 +85,7 @@ const AuthForm = () => {
             onChange={handleChange}
             value={formData.username}
             placeholder="Username"
-            className="w-full p-3 border rounded-xl"
+            className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
             required
           />
 
@@ -104,7 +97,7 @@ const AuthForm = () => {
                 onChange={handleChange}
                 value={formData.email}
                 placeholder="Email"
-                className="w-full p-3 border rounded-xl"
+                className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
                 required
               />
               <input
@@ -113,7 +106,7 @@ const AuthForm = () => {
                 onChange={handleChange}
                 value={formData.age}
                 placeholder="Age"
-                className="w-full p-3 border rounded-xl"
+                className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
               />
               <input
                 type="text"
@@ -121,7 +114,7 @@ const AuthForm = () => {
                 onChange={handleChange}
                 value={formData.phone_number}
                 placeholder="Phone Number"
-                className="w-full p-3 border rounded-xl"
+                className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
               />
             </>
           )}
@@ -132,7 +125,7 @@ const AuthForm = () => {
             onChange={handleChange}
             value={formData.password}
             placeholder="Password"
-            className="w-full p-3 border rounded-xl"
+            className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
             required
           />
 
@@ -140,7 +133,7 @@ const AuthForm = () => {
             type="submit"
             className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition"
           >
-            {isRegister ? 'Register' : 'Login'}
+            {isRegister ? "Register" : "Login"}
           </button>
         </form>
       </div>
