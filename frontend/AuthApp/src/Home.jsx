@@ -8,7 +8,7 @@ const Home = () => {
 
   const handleSummarize = async () => {
     try{
-
+      console.log("Hello")
       const access_token = localStorage.getItem("access_token")
       const response = await fetch('http://127.0.0.1:8000/summarize/',{
         "method" : "POST",
@@ -22,20 +22,23 @@ const Home = () => {
 
       })
 
-      const data = response.json()
+      console.log("Response came")
+      const data = await response.json()
 
       if(response.ok){
         console.log(data.message)
+        setSummary(data.data)
+        console.log("Data is set.")
       }
       else{
-        console.log()
+        console.log("Error :",data.error)
       }
 
 
 
 
     }catch(error){
-
+        console.log("error",error)
     }
 
   };
@@ -62,7 +65,7 @@ const Home = () => {
       {summary && (
         <div className="mt-6 w-full max-w-2xl bg-white p-4 rounded-lg shadow-md">
           <h2 className="text-lg font-semibold mb-2">Summarized Text:</h2>
-          <p className="text-gray-700">{summary}</p>
+          <p className="text-gray-700">{summary.summarized_text}</p>
         </div>
       )}
     </div>
